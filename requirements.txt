@@ -1,0 +1,11 @@
+# Homebrew formulas used by your zsh config
+coreutils==9.9
+zsh-syntax-highlighting==0.8.0
+zsh-autosuggestions==0.7.1
+
+# Homebrew casks
+iterm2
+
+# Non-brew dependencies required by your prompt/theme stack
+oh-my-zsh
+powerlevel10k
