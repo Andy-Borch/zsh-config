@@ -84,12 +84,6 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export CLICOLOR=1
-export LSCOLORS=Exfxgxdxcxegedabagacad
-
-# Aliases (The -G flag is crucial for colors)
-alias ls='ls -G'
-alias ll='ls -lahG'
-alias la='ls -aG'
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -132,55 +126,61 @@ if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.
 fi
 
 # ============================================
-# SOFT SYNTAX HIGHLIGHTING (Pastel Colors)
+# SYNTAX HIGHLIGHTING (One Dark Pro)
 # ============================================
 # Must be placed AFTER the syntax-highlighting plugin is sourced
 
-# 1. Make errors (typos) a Soft Pastel Red (203)
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=203,bold'
+# One Dark Pro core colors:
+# red=204 green=114 yellow=180 blue=75 purple=176 cyan=73 comment=59
 
-# 2. Make valid commands a Soft Pastel Green (150)
-ZSH_HIGHLIGHT_STYLES[command]='fg=150,bold'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=150,bold'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=150,bold'
-ZSH_HIGHLIGHT_STYLES[function]='fg=150,bold'
+# Unknown/invalid commands
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=204,bold'
+ZSH_HIGHLIGHT_STYLES[default]='none'
 
-# 3. Make paths/files a Soft Blue (111) to match your name
-ZSH_HIGHLIGHT_STYLES[path]='fg=111'
+# Valid command forms
+ZSH_HIGHLIGHT_STYLES[command]='fg=180,bold'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=176,bold'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=180,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=73,bold'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=176,bold'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=59'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=180'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=180'
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=180,bold'
+ZSH_HIGHLIGHT_STYLES[assign]='fg=204'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=176'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=59,italic'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=173,bold'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=73'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=204,bold'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=204,bold'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=114'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=114'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=73'
+
+# Paths/files and quoted strings
+ZSH_HIGHLIGHT_STYLES[path]='fg=110'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=59'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=176'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=114'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=114'
+ZSH_HIGHLIGHT_STYLES[command-substitution]='fg=73'
+ZSH_HIGHLIGHT_STYLES[math-expansion]='fg=173'
+ZSH_HIGHLIGHT_STYLES[process-substitution]='fg=176'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=75'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=176'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=173'
 
 # ============================================
-# ANDY BORCH: COMMAND SEPARATOR
-# ============================================
-# This function draws a line across the screen before every new prompt.
-
-function draw_separator() {
-  # 1. Check if this is the very first prompt of the session.
-  #    If yes, do nothing (prevents a weird line at the top).
-  if [[ -z $HAS_RUN_ONCE ]]; then
-    export HAS_RUN_ONCE=1
-    return
-  fi
-
-  # 2. Draw the line.
-  #    (l:COLUMNS::─:) = Draw the '─' char across the full width
-  print -P '%F{152}${(l:COLUMNS::─:)}%f'
-}
-
-# 3. Hook it into Zsh so it runs automatically
-#    Using the array ensures we don't break other plugins.
-precmd_functions+=(draw_separator)
-
-# ============================================
-# GNU LS CONFIGURATION (Clean & Neutral)
+# GNU LS CONFIGURATION (One Dark Pro)
 # ============================================
 
 # 1. Clean up old variables
 unset EZA_COLORS
+unset LSCOLORS
 
-# 2. Define Colors
-# di=Bold Blue (1;34) | ln=Teal (38;5;36)
-# ex=00 (Normal/White) - This removes the Green override
-export LS_COLORS="di=1;34:ln=38;5;73:ex=00:*.md=38;5;219:*.py=38;5;222:*.c=38;5;110:*.cpp=38;5;75:*.h=38;5;75:*.csv=38;5;150:*.sh=38;5;209:*.java=38;5;180:*.pdf=38;5;203:*makefile=38;5;140:*Makefile=38;5;140:*.json=38;5;223:*.js=38;5;229:*.html=38;5;216:*.css=38;5;153:*.zip=38;5;167:*.tar=38;5;167:*.gz=38;5;167:*.o=38;5;240"
+# 2. One Dark Pro-inspired file type colors
+export LS_COLORS="no=0:fi=0:di=38;5;75:ln=38;5;73:pi=38;5;180:so=38;5;176:bd=38;5;173:cd=38;5;173:su=38;5;204:sg=38;5;203:tw=38;5;59:ow=38;5;59:st=38;5;59:ex=00:*.md=38;5;109:*.txt=38;5;188:*.TXT=38;5;188:*.rtf=38;5;188:*.log=38;5;59:*.json=38;5;180:*.jsonc=38;5;180:*.yaml=38;5;180:*.yml=38;5;180:*.toml=38;5;180:*.xml=38;5;180:*.conf=38;5;180:*.ini=38;5;180:*.env=38;5;180:*.lock=38;5;59:*.zsh=38;5;114:*.sh=38;5;114:*.bash=38;5;114:*.fish=38;5;114:*.py=38;5;180:*.ipynb=38;5;173:*.IPYNB=38;5;173:*.rb=38;5;176:*.pl=38;5;204:*.php=38;5;176:*.js=38;5;204:*.mjs=38;5;204:*.cjs=38;5;204:*.ts=38;5;75:*.tsx=38;5;75:*.jsx=38;5;75:*.vue=38;5;75:*.svelte=38;5;75:*.html=38;5;204:*.css=38;5;176:*.scss=38;5;176:*.less=38;5;176:*.go=38;5;73:*.rs=38;5;173:*.java=38;5;204:*.kt=38;5;204:*.swift=38;5;173:*.c=38;5;75:*.h=38;5;75:*.cpp=38;5;75:*.hpp=38;5;75:*.cc=38;5;75:*.hh=38;5;75:*.sql=38;5;176:*.graphql=38;5;176:*.gql=38;5;176:*.csv=38;5;114:*.tsv=38;5;114:*.pdf=38;5;203:*.PDF=38;5;203:*.docx=38;5;176:*.DOCX=38;5;176:*.pptx=38;5;75:*.PPTX=38;5;75:*.png=38;5;180:*.jpg=38;5;180:*.jpeg=38;5;180:*.gif=38;5;180:*.webp=38;5;180:*.svg=38;5;73:*.ico=38;5;73:*.mp3=38;5;173:*.wav=38;5;173:*.mp4=38;5;173:*.mov=38;5;173:*.zip=38;5;59:*.tar=38;5;59:*.gz=38;5;59:*.tgz=38;5;59:*.xz=38;5;59:*.bz2=38;5;59:*.7z=38;5;59:*.o=38;5;59:*.a=38;5;59:*.so=38;5;59:*.dylib=38;5;59:*.class=38;5;59:*Makefile=38;5;176:*makefile=38;5;176:*Dockerfile=38;5;176"
 # 3. Aliases
 # Removed -F (No more * symbols next to files)
 alias ls='gls --color=always --group-directories-first -C'

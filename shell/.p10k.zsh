@@ -368,11 +368,11 @@
 
     if (( $1 )); then
       # Styling for up-to-date Git status.
-      local       meta='%f'   # default foreground
-      local      clean='%2F'  # green foreground
-      local   modified='%3F'  # yellow foreground
-      local  untracked='%4F'  # blue foreground
-      local conflicted='%1F'  # red foreground
+      local       meta='%59F'    # one dark comment gray
+      local      clean='%176F'   # one dark purple
+      local   modified='%173F'   # one dark orange
+      local  untracked='%75F'    # one dark blue
+      local conflicted='%204F'   # one dark red
     else
       # Styling for incomplete and stale Git status.
       local       meta='%f'  # default foreground
@@ -499,9 +499,9 @@
 
   # These settings are used for repositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=2
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=2
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=3
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=176
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=75
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=173
 
   ##########################[ status: exit code of the last command ]###########################
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and
@@ -1713,41 +1713,44 @@ typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 'builtin' 'unset' 'p10k_config_opts'
 
 # ==========================================
-# ANDY BORCH: CLEAN SINGLE LINE
+# ANDY BORCH: TWO-LINE CONNECTED PROMPT
 # ==========================================
 
-# 1. DISABLE TWO-LINE PROMPT & RULER
-# This puts the command on the same line as your name
-typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
+# 1. Two-line prompt with subtle connector styling
+typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 typeset -g POWERLEVEL9K_SHOW_RULER=false
+typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%F{59}╭─%f '
+typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%F{59}│ %f '
+typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{59}╰─%f '
 
-# 2. REMOVE THE HOOKS (The Brackets)
-typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
-typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX=''
-typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
-
-# 3. DEFINE THE SINGLE LINE LAYOUT
-# Left: Name -> Path -> Arrow
-typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir prompt_char)
-# Right: Status -> Duration -> Time
-typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time time)
+# 2. Top line: user -> path -> git branch, then time/status on right.
+#    Bottom line: prompt character + command.
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs prompt_char)
+typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
 
 # 4. THE "BLUISH GREEN LINE" (Prompt Character)
-# We set the arrow ">" to Teal (36) to keep that color you like
-typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=36
-typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=203
+# Prompt arrow in One Dark cyan/red
+typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=73
+typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=204
 
 # 5. KEEP YOUR COLORS (111 & 146)
-# Name (111)
-typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,ROOT,SUDO}_CONTENT_EXPANSION='%n@%m'
-typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=111
-# Path (146)
-typeset -g POWERLEVEL9K_DIR_FOREGROUND=146
-typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=146
-# Time (146) & Duration (111)
-typeset -g POWERLEVEL9K_TIME_FOREGROUND=146
-typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=111
+# User
+typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,ROOT,SUDO}_CONTENT_EXPANSION='%n'
+typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_CONTENT_EXPANSION='%n@%m'
+typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=67
+# Path
+typeset -g POWERLEVEL9K_DIR_FOREGROUND=110
+typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=110
+# Git branch + state
+typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=' '
+typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=176
+typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=176
+typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=75
+typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=173
+# Time
+typeset -g POWERLEVEL9K_TIME_FOREGROUND=114
+typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=59
 typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
 typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
 typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
