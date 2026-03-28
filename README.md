@@ -1,60 +1,74 @@
 # Zsh Replica Setup
 
-This repo captures my Zsh + iTerm2 environment so it can be reproduced on another macOS machine.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## What this includes
+This repository provides a streamlined way to replicate a powerful and visually appealing Zsh + iTerm2 development environment on a new macOS machine.
 
-- `shell/.zshrc` - main Zsh configuration
-- `shell/.zprofile` - login shell initialization
-- `shell/.p10k.zsh` - Powerlevel10k prompt config
-- `Brewfile` - Homebrew formulas/casks required by the setup
-- `requirements.txt` - human-readable dependency list
-- `setup.sh` - bootstrap script to install dependencies and copy shell files
-- `iterm2/com.googlecode.iterm2.plist` - iTerm2 preferences export
-- `iterm2/everforest-dark.itermcolors` - iTerm2 color preset
-- `iterm2/andy_borch_iterm2_config_backup.zip` - backup archive of prior terminal config files
+## ✨ Features
 
-## Replicate on a new machine
+- **Oh My Zsh Integration**: Built on the robust Oh My Zsh framework.
+- **Powerlevel10k Prompt**: A fast and highly customizable Zsh theme for developers.
+- **Enhanced Syntax Highlighting**: Custom color schemes for commands, aliases, and more.
+- **GNU `ls` with One Dark Pro Colors**: Improved directory listings using `coreutils` and a custom `LS_COLORS` configuration.
+- **Useful Aliases**: Pre-configured aliases for common operations (e.g., `ls`, `ll`, `la`).
+- **Automated Bootstrap**: A simple `setup.sh` script to handle dependencies and configuration deployment.
+- **iTerm2 Integration**: Pre-configured preferences and color schemes included.
 
-```bash
-git clone https://github.com/Andy-Borch/zsh-config.git
-cd zsh-config
-./setup.sh
-```
+## 🚀 Quick Start (Replication)
 
-`setup.sh` will:
+To set up this environment on a new machine:
 
-1. Install Homebrew dependencies from `Brewfile`
-2. Install Oh My Zsh (if missing)
-3. Install Powerlevel10k (if missing)
-4. Copy shell configs into your home directory (`~/.zshrc`, `~/.zprofile`, `~/.p10k.zsh`)
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Andy-Borch/zsh-config.git
+   cd zsh-config
+   ```
 
-## iTerm2 setup
+2. **Run the setup script**:
+   ```bash
+   ./setup.sh
+   ```
 
-After running `setup.sh`:
+   **Note**: `setup.sh` will install Homebrew (if missing), fetch dependencies via `Brewfile`, install Oh My Zsh and Powerlevel10k, and copy configuration files to your home directory (`~/.zshrc`, `~/.zprofile`, `~/.p10k.zsh`). **Existing files will be overwritten.**
 
-1. Open iTerm2 -> Settings -> General -> Preferences
-2. Point preferences to `iterm2/com.googlecode.iterm2.plist` (or import settings manually)
-3. Import `iterm2/everforest-dark.itermcolors` via Profiles -> Colors -> Color Presets -> Import
+3. **Restart your terminal** or run `source ~/.zshrc`.
 
-## Dependencies in this setup
+## 🖥️ iTerm2 Setup
 
-Homebrew formulas:
+After running the setup script, follow these steps to configure iTerm2:
 
-- `coreutils` (provides `gls`, used in aliases)
-- `zsh-syntax-highlighting`
-- `zsh-autosuggestions`
+1. **Open iTerm2 Settings**: `Cmd + ,` or `Settings` from the menu.
+2. **Import General Preferences**:
+   - Go to `General` -> `Preferences`.
+   - Select "Load preferences from a custom folder or URL".
+   - Point it to the `iterm2/` directory in this repo (or use the provided `.plist`).
+3. **Import Color Preset**:
+   - Go to `Profiles` -> `Colors`.
+   - Click `Color Presets...` -> `Import`.
+   - Select `iterm2/everforest-dark.itermcolors`.
 
-Homebrew cask:
+## 📦 What's Included?
 
-- `iterm2`
+| Component | Path | Description |
+| :--- | :--- | :--- |
+| **Zsh Config** | `shell/.zshrc` | Main interactive shell initialization. |
+| **Zsh Profile** | `shell/.zprofile` | Login shell environment (Homebrew path). |
+| **P10k Config** | `shell/.p10k.zsh` | Granular prompt styling and behavior. |
+| **Homebrew** | `Brewfile` | List of formulas and casks (`coreutils`, `iterm2`, etc.). |
+| **iTerm2 Settings** | `iterm2/*.plist` | Terminal preferences export. |
+| **iTerm2 Theme** | `iterm2/*.itermcolors` | Everforest Dark color preset. |
 
-Non-brew components:
+## 🛠️ Customization
 
-- Oh My Zsh
-- Powerlevel10k
+- **Aliases**: Add your own to `shell/.zshrc`.
+- **Plugins**: Enable more Oh My Zsh plugins by modifying the `plugins=(git)` line in `shell/.zshrc`.
+- **Theme**: Re-configure Powerlevel10k by running `p10k configure`.
 
-## Notes
+## 📚 Further Information
 
-- Existing local shell files on a target machine will be overwritten by `setup.sh`.
-- If you want a safer migration, back up existing dotfiles first.
+- [System Architecture](docs/ARCHITECTURE.md)
+- [Contributing Guidelines](docs/CONTRIBUTING.md)
+
+## ⚖️ License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
